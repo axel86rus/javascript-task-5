@@ -47,9 +47,10 @@ function getEmitter() {
          */
         off: function (event, context) {
             Object.keys(eventObject.get(context))
-                .filter((value) => value === event || value.split('.')[0] === event)
                 .forEach((key) => {
-                    eventObject.get(context)[key] = [];
+                    if (key.startsWith(event + '.') || event === key) {
+                        delete eventObject.get(context)[key];
+                    }
                 });
 
             return this;
