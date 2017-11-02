@@ -33,7 +33,7 @@ function getEmitter() {
                 eventObject.set(context,
                     Object.assign(eventObject.get(context), obj));
             } else {
-                eventObject.get(context).event.push(handler);
+                eventObject.get(context)[event].push(handler);
             }
 
             return this;
