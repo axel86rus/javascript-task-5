@@ -104,7 +104,7 @@ lecturer
 
 lecturer.emit('end');
 // Sam(20,102); Sally(70,191); Bill(40,62); Sharon(90,40)
-
+console.info(this);
 if (getEmitter.isStar) {
     students = {
         Sam: {
