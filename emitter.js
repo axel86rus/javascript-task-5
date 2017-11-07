@@ -24,14 +24,13 @@ function getEmitter() {
          * @returns {Object}
          */
         on: function (event, context, handler) {
-            let obj = {};
-            obj[event] = [handler];
+            let eventWithHandler = {};
+            eventWithHandler[event] = [handler];
             if (eventObject.get(context) === undefined) {
-                eventObject.set(context,
-                    obj);
+                eventObject.set(context, eventWithHandler);
             } else if (eventObject.get(context)[event] === undefined) {
                 eventObject.set(context,
-                    Object.assign(eventObject.get(context), obj));
+                    Object.assign(eventObject.get(context), eventWithHandler));
             } else {
                 eventObject.get(context)[event].push(handler);
             }
@@ -65,10 +64,10 @@ function getEmitter() {
             eventObject.forEach((events, context) => {
                 let eventNamespace = event.split('.');
                 for (let index = 0; index < eventNamespace.length; index++) {
-                    let eventes = eventNamespace.slice(0, eventNamespace.length - index).join('.');
-                    if (events[eventes] !== undefined) {
-                        events[eventes].forEach((func) => {
-                            func.bind(context)();
+                    let newEvent = eventNamespace.slice(0, eventNamespace.length - index).join('.');
+                    if (events[newEvent] !== undefined) {
+                        events[newEvent].forEach((func) => {
+                            func.call(context);
                         }
                         );
                     }
